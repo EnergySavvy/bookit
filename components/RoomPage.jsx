@@ -16,6 +16,13 @@ function minutesDiff(date, laterDate) {
     return Math.round((laterDate - date) / (1000 * 60));
 }
 
+function minutesDiffFormat(date, laterDate) {
+  let diff = minutesDiff(date, laterDate);
+  var hours = Math.trunc(diff/60);
+  var minutes = diff % 60;
+  let hourTitle = hours === 1 ? " hour, " : " hours, ";
+  return (hours > 0) ? hours + hourTitle + minutes + " minutes" : minutes + " minutes";
+}
 
 export default React.createClass({
     propTypes: {
@@ -95,7 +102,7 @@ export default React.createClass({
                         <button className="booked-indicator">
                             Booked by {this.state.status.bookedBy}
                             <br/>
-                            until {formatTime(this.state.status.busyUntil)}
+                            <div className="more-info">until {formatTime(this.state.status.busyUntil)}</div>
                         </button>
                     ) : (
                     <div>
@@ -105,21 +112,21 @@ export default React.createClass({
                         >
                             Book until {formatTime(bookUntil)}
                             <br />
-                            ({minutesDiff(currentDate, bookUntil)} minutes)
+                            <div className="more-info">{minutesDiffFormat(currentDate, bookUntil)}</div>
                         </button>
                         <button
                             className="decrement"
                             onClick={() => {this.updateBookUntil(decrementTarget);}}
                             disabled={decrementDisabled}
                         >
-                            {decrementSize}min
+                            {decrementSize} min
                         </button>
                         <button
                             className="increment"
                             onClick={() => {this.updateBookUntil(incrementTarget);}}
                             disabled={incrementDisabled}
                         >
-                            +{incrementSize}min
+                            +{incrementSize} min
                         </button>
                     </div>
                     )

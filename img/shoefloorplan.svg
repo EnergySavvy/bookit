@@ -12,6 +12,15 @@
 0 80,
 30 80,
 30 50,
-0 50
-" fill="#fff" stroke="#ccc"/>
+0 50,
+0 0" fill="#fff" stroke="#000"/>
+
+<polyline points="15 50, 15 80" stroke="orange"/>
+<text x="10" y="60" font-size="3px" font-family="Verdana" fill="white">Slackline #1</text>
+
+
+<polyline points="70 12, 100 12" stroke="orange"/>
+<text x="75" y="16" font-size="3px" font-family="Verdana" fill="white">Slackline #2</text>
+
+
 </svg>

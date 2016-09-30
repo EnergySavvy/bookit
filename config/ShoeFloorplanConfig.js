@@ -158,24 +158,18 @@ export default {
                 width: 1,
                 height: 1.25,
             },
-            additionalStyling: {
-                transform: 'rotate(-90deg)',
-            },
         },
         {
             label: 'Phone Booth',
             apiId: 'energysavvy.com_2d35333537363739372d353436@resource.calendar.google.com',
             position: {
-                left: 0,
-                top: 2,
+                left: 1,
+                top: 3,
             },
             shape: {
                 type: 'rectangle',
                 width: 1,
                 height: 1.25,
-            },
-            additionalStyling: {
-                transform: 'rotate(-90deg)',
             },
         },
 //        {
