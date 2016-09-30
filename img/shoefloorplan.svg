@@ -1,0 +1,17 @@
+<svg className="floorplan" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="
+0 0,
+70 0,
+70 25,
+100 25,
+100 0,
+185 0,
+185 76,
+127 135,
+0 135,
+0 80,
+30 80,
+30 50,
+0 50
+" fill="#fff" stroke="#ccc"/>
+</svg>

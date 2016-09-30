@@ -1,0 +1,86 @@
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import ChangeNotifier from './ChangeNotifier';
+import RoomConstants from '../constants/RoomConstants';
+import FloorplanConfig from '../constants/FloorplanConfig';
+
+const EMPTY_ROOM_DATA = {
+    freeUntil: null,
+    busyUntil: null,
+    bookedBy: null,
+};
+
+function emptyRoomData(roomName) {
+    return _.extend({roomId: roomName}, EMPTY_ROOM_DATA);
+}
+
+function adaptedRoomData(roomName, data) {
+    const now = new Date();
+    const adaptedData = emptyRoomData(roomName);
+    const startTime = new Date(data.start.dateTime);
+    const endTime = new Date(data.end.dateTime);
+
+    adaptedData.bookedBy = data.organizer.displayName || data.organizer.email.split('@')[0];
+    if (startTime >= now) {
+        adaptedData.freeUntil = startTime;
+    } else {
+        adaptedData.busyUntil = endTime;
+    }
+    return adaptedData;
+}
+
+function getNextHalfHour() {
+    const currentDate = new Date();
+    currentDate.setSeconds(0, 0);
+    const minutes = currentDate.getMinutes();
+    const minutesPastPreviousHalfHour = minutes - minutes % 30;
+
+    const nextHalfHour = _.clone(currentDate);
+    nextHalfHour.setMinutes(minutesPastPreviousHalfHour + 30);
+    return nextHalfHour;
+}
+
+let nextHalfHour = getNextHalfHour();
+const roomData = _.fromPairs(
+    _.map(FloorplanConfig.rooms, room => [
+        room.label,
+        emptyRoomData(room.label),
+    ])
+);
+
+const RoomStore = {
+    changeNotifier: new ChangeNotifier(),
+
+    getRoomStatuses() {
+        return roomData;
+    },
+
+    getNextHalfHour() {
+        return nextHalfHour;
+    },
+
+    handleRoomData(roomName, data) {
+        roomData[roomName] = data === null ? emptyRoomData(roomName) : adaptedRoomData(roomName, data);
+        this.changeNotifier.notify();
+    },
+
+    updateTime() {
+        nextHalfHour = getNextHalfHour();
+        this.changeNotifier.notify();
+    },
+
+    dispatchToken: AppDispatcher.register(payload => {
+        const action = payload;
+        switch (action.type) {
+            case RoomConstants.NEW_ROOM_DATA:
+                RoomStore.handleRoomData(action.roomName, action.data);
+                break;
+            case RoomConstants.UPDATE_TIME:
+                RoomStore.updateTime();
+                break;
+            default:
+                break;
+        }
+    }),
+};
+
+export default RoomStore;

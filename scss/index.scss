@@ -1,0 +1,204 @@
+$unit: 100px;
+$white: #fff;
+$gray: #ccc;
+$green: #a1e679;
+$blue: #0191e8;
+$black: #000;
+$floor_plan_width: 9.5;
+
+@mixin rect($width, $height, $x, $y) {
+    height: $height * $unit;
+    left: $x * $unit;
+    top: $y * $unit;
+    width: $width * $unit;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: $blue;
+    font: 14px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.mask {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+
+.room-page {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    position: relative;
+    margin: auto;
+    text-align: center;
+
+    h1 {
+        margin-left: 1%;
+        padding: 0;
+        font-size: 40px;
+    }
+
+    button {
+        border: none;
+        display: inline-block;
+        font-size: 1.2em;
+        height: 100px;
+        cursor: pointer;
+    }
+
+    .floor-plan-link, .time-indicator {
+        position: absolute;
+        top: 0px;
+        margin: 1.5em;
+        font-size: 20px;
+        padding: 1em;
+    }
+    .floor-plan-link {
+        right: 0px;
+    }
+    .time-indicator {
+        position: absolute;
+        left: 0px;
+    }
+
+    .booked-indicator, .book {
+        width: 90%;
+        height: 200px;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 4em;
+    }
+
+    .booked-indicator {
+        background-color: $gray;
+    }
+
+    .book {
+        background-color: $green;
+    }
+
+    button.increment, button.decrement{
+        padding: 1em;
+        margin: 1em;
+        width: 200px;
+        font-size: 30px;
+    }
+
+}
+
+@media all and (min-width: 700px) {
+    .floor-plan {
+        @include rect($floor_plan_width, 5, 0, 0);
+        margin: 10px auto 0;
+        position: relative;
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .room {
+        overflow: hidden;
+        position: absolute;
+        text-align: center;
+    }
+
+    .room--name {
+        display: block;
+        font-size: 1.25em;
+        font-weight: bold;
+        margin-bottom: 0.5em;
+    }
+
+    .room--booker {
+        display: block;
+        line-height: 1.2em;
+    }
+
+    #authorize-button {
+        background: $gray;
+        border: 0;
+        font-size: 1.5em;
+        height: 100px;
+        left: 50%;
+        line-height: 100px;
+        margin-left: -150px;
+        margin-top: 100px;
+        padding: 0;
+        position: absolute;
+        width: 300px;
+    }
+}
+
+@media all and (max-width: 699px) {
+    .floor-plan {
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    }
+    .room--name {
+        padding-right: 20px;
+    }
+    .booking-modal {
+        width: 95%;
+
+        button {
+            width: 100%;
+        }
+    }
+}
+
+.room {
+    margin: 0;
+    padding: 1px;
+
+    a {
+        background: $green;
+        color: $black;
+        cursor: pointer;
+        display: block;
+        height: 100%;
+        padding: 1em;
+        width: 100%;
+        text-decoration: none;
+    }
+}
+
+.room--booked a {
+    background: $gray;
+}
+
+@media all and (min-width: 700px) {
+    .floorplan-background {
+        float: left;
+        width: 100%;
+        text-align: center;
+        background-repeat: no-repeat;
+        background-position: center 0px;
+    }
+}
+
+@media all and (max-width: 699px) {
+    .floorplan-background {
+        display: none;
+    }
+}

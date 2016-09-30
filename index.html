@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bookit</title>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta http-equiv="refresh" content="3000"><!--Refresh every 50 minutes - hackaround for SPECIAL-155 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div id="bookit"></div>
+
+        <button id="authorize-button" style="display: none;">Authorize to see rooms</button>
+        <script type="text/javascript" src="assets/bundle.js"></script>
+        <script>
+
+          // prod
+          const CLIENT_API_ID = '1035642022179-7q744lor7kr6m38bsnk53c2o6j015nnn.apps.googleusercontent.com';
+          // dev
+          // const CLIENT_API_ID = '912838747898-glnkeh9r5ikbblc7ifmn5804tvs68dq0.apps.googleusercontent.com';
+
+          function init() {
+            App.GoogleApiInit(gapi, CLIENT_API_ID);
+          };
+        </script>
+        <script src="https://apis.google.com/js/client.js?onload=init"></script>
+    </body>
+</html>
